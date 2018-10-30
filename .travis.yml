@@ -3,7 +3,7 @@ python:
   - "3.6.5"
 env:
   global:
-    - APP_SETTINGS = tesing
+    - ENVIRONMENT = development
 # command to install dependencies
 install:
   - pip install -r requirements.txt
