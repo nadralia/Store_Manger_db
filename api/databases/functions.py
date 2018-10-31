@@ -5,6 +5,7 @@ class DatabaseFunctions:
         self.connect = Database()
         self.cursor = self.connect.dict_cursor
 
+    """user helper functions begin it"""
     def create_a_new_user(self, username, phone, role, password):
         #function to create a new user
         query = (
@@ -45,3 +46,50 @@ class DatabaseFunctions:
         user =self.cursor.fetchone()
         return user
     
+    """product helper functions begin it"""
+
+    def insert_a_product(self, prod_name, prod_quantity, unit_price):
+        #function to insert a product
+        query = (
+            """INSERT INTO products (prod_name, prod_quantity, unit_price) VALUES ('{}', '{}', '{}')""".
+            format(prod_name, prod_quantity, unit_price))
+        self.cursor.execute(query)
+
+    def check_if_product_exist_in_db(self,prod_name):
+        #function to check if product exists.
+        query = ("""SELECT * FROM products where prod_name = '{}'""".format(prod_name))
+        self.cursor.execute(query)
+        product = self.cursor.fetchone()
+        if product:
+            return product
+        return False
+
+    def update_product(self, prod_name, prod_quantity, unit_price, prod_id):
+        #function to update product
+        try:
+            query = ("""UPDATE products SET prod_name = '{}', prod_quantity = '{}', unit_price = '{}' where prod_id = '{}'""" .format(
+                prod_name, prod_quantity, unit_price, prod_id))
+            self.cursor.execute(query)
+            count = self.cursor.rowcount
+            if int(count) > 0:
+                return True
+            else:
+                return False   
+        except:
+            return False
+
+    def fetch_a_single_product(self,prod_id):
+        # function to get details of a product
+        self.cursor.execute("SELECT * FROM products WHERE prod_id = '{}'" .format(prod_id))
+        row = self.cursor.fetchone()
+        return row
+
+    def remove_product(self, prod_id):
+        # function to remove a specific product
+        query = ("""DELETE FROM products WHERE prod_id = '{}'""" .format(prod_id))
+        self.cursor.execute(query)
+        delete = self.cursor.rowcount
+        if int(delete) > 0:
+            return True
+        else:
+            return False   
