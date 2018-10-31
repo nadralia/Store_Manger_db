@@ -28,18 +28,17 @@ def add_product():
             #product exist but more quantity has to be added
             new_quantity = product_exists["prod_quantity"] + int(prod_quantity)
             product_controller.update_product(prod_name=prod_name,
-                         prod_quantity=new_quantity, unit_price=unit_price, prod_id=product_exists["prod_id"], date_added=date_added)
+                         prod_quantity=new_quantity, unit_price=unit_price, date_added=date_added, prod_id=product_exists["prod_id"])
             return jsonify({
-            "message":
-                "product already exits, so its quantity has been updated", "Updated Product":
-                 product_controller.return_single_product(product_exists["product_id"])}), 200
+            "message": "This product already exits, so its quantity has been updated", "Product":
+                 product_controller.return_single_product(product_exists["prod_id"])}), 200
 
         product_added = product_controller.create_a_product(prod_name=prod_name, prod_quantity=int(
                     prod_quantity), unit_price=int(unit_price), date_added=date_added)
         if product_added:
             return jsonify({
                         "message":
-                        "product successfully added.", "New Product": product_controller.check_if_a_product_exist(prod_name=prod_name)
+                        "Product successfully added.", "Product": product_controller.check_if_a_product_exist(prod_name=prod_name)
                     }), 201
         return jsonify({"message": "product not added"}), 400
     return jsonify({"message": "a 'expected_keys' is missing in your request body"}), 400
@@ -48,20 +47,20 @@ def add_product():
 def fetch_products():
     """Fetches all the available products"""
     products = product_controller.get_all_products()
+    if products:
+        return jsonify({"Products": products}), 200
+    return jsonify({"message": "No products available"}), 404
 
-    all_product_list = []
-
-    for product in products:
-        product_dict = {
-            "prod_id": product['prod_id']
-         }
-        all_product_list.append(product_dict)
-
-    return {'products': all_product_list}, 200
 
 @product.route('/api/v1/products/<int:prod_id>', methods=['GET'])
 def fetch_single_product(prod_id):
-    pass
+    invalid = validate.validate_int_input_type(prod_id)
+    if invalid:
+        return jsonify({"message": invalid}), 400
+    details = product_controller.return_single_product(prod_id=prod_id)
+    if details:
+        return jsonify({"Product": details}), 200
+    return jsonify({"message": "Product not available"}), 404
 
 
 @product.route('/api/v1/products/<int:prod_id>', methods=['DELETE'])
@@ -73,7 +72,7 @@ def delete_product(prod_id):
     if delete:
         return jsonify({"message": "product successfully deleted on safe mode"}), 200
     else:
-        return jsonify({"message": "product not deleted, or doesn't exist"}), 400
+        return jsonify({"message": "Product not deleted"}), 400
 
 @product.route('/api/v1/products/<int:prod_id>', methods=['PUT'])
 def update_product(prod_id):
@@ -81,7 +80,7 @@ def update_product(prod_id):
     if invalid_id:
         return jsonify({"message": invalid_id}), 400
     data = request.get_json()
-    search_keys = ("product", "quantity", "unit_price")
+    search_keys = ("prod_name", "prod_quantity", "unit_price")
     if all(key in data.keys() for key in search_keys):
         prod_name = data.get("prod_name")
         prod_quantity = data.get("prod_quantity")
@@ -97,7 +96,7 @@ def update_product(prod_id):
         if update:
             return jsonify({
             "message":
-                "product successfully updated.", "Updated Product": product_controller.return_single_product(prod_id=prod_id)
+                "Product successfully updated.", "Product": product_controller.return_single_product(prod_id=prod_id)
             }), 200
         return jsonify({"message": "product not updated or doesn't exist"}), 400
-    return jsonify({"message": "a 'key(s)' is missing in your request body"}), 400
+    return jsonify({"message": "Make sure you use the right keys"}), 400

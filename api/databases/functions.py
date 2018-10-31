@@ -68,7 +68,7 @@ class DatabaseFunctions:
         #function to update product
         try:
             query = ("""UPDATE products SET prod_name = '{}', prod_quantity = '{}', unit_price = '{}', date_added = '{}' where prod_id = '{}'""" .format(
-                prod_name, prod_quantity, unit_price, prod_id, date_added))
+                prod_name, prod_quantity, unit_price, date_added, prod_id))
             self.cursor.execute(query)
             count = self.cursor.rowcount
             if int(count) > 0:
