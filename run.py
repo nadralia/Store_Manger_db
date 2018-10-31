@@ -1,8 +1,11 @@
 from api import app
+from api.databases.dbconnect import Database
+
 import os
-from api.config import app_config
-print(os.getenv('ENVIRONMENT'))
-print(app_config['production'].ENVIRONMENT)
+
+print(os.environ['ENVIRONMENT'])
 
 if __name__ == "__main__":
-    app.run()
+    db_connection = Database()
+    db_connection.create_tables()
+    app.run(debug=True)

@@ -1,3 +1,5 @@
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     """Parent Project environment configuration class."""
