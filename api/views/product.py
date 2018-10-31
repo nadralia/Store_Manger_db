@@ -42,12 +42,22 @@ def add_product():
                         "product successfully added.", "New Product": product_controller.check_if_a_product_exist(prod_name=prod_name)
                     }), 201
         return jsonify({"message": "product not added"}), 400
-    return jsonify({"message": "a 'key(s)' is missing in your request body"}), 400
+    return jsonify({"message": "a 'expected_keys' is missing in your request body"}), 400
 
 @product.route('/api/v1/products', methods=['GET'])
 def fetch_products():
     """Fetches all the available products"""
-    pass
+    products = product_controller.get_all_products()
+
+    all_product_list = []
+
+    for product in products:
+        product_dict = {
+            "prod_id": product['prod_id']
+         }
+        all_product_list.append(product_dict)
+
+    return {'products': all_product_list}, 200
 
 @product.route('/api/v1/products/<int:prod_id>', methods=['GET'])
 def fetch_single_product(prod_id):

@@ -93,3 +93,12 @@ class DatabaseFunctions:
             return True
         else:
             return False   
+
+    def fetch_all_products(self):
+        """
+        Query gets all that are recently available
+        :admin
+        """
+        self.cursor.execute("SELECT * FROM products")
+        all_products = self.cursor.fetchall()
+        return all_products
