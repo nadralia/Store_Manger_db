@@ -2,10 +2,6 @@ import psycopg2
 from psycopg2 import extras as _extra
 from psycopg2.extensions import cursor as _cursor
 
-import os
-from api import app
-from api.config import app_config
-
 class Database():
     """class for app database"""
 
