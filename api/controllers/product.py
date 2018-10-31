@@ -6,12 +6,12 @@ class ProductController:
     def __init__(self):
         self.dbfunctions = DatabaseFunctions()
 
-    def create_a_product(self, prod_name, prod_quantity, unit_price):
+    def create_a_product(self, prod_name, prod_quantity, unit_price, date_added):
         #function to create a new product
         new_product = Product(prod_name=prod_name,
-                              prod_quantity=prod_quantity, unit_price=unit_price)
+                              prod_quantity=prod_quantity, unit_price=unit_price , date_added=date_added)
         self.dbfunctions.insert_a_product(prod_name=new_product.prod_name,
-                                   prod_quantity=new_product.prod_quantity, unit_price=new_product.unit_price)
+                                   prod_quantity=new_product.prod_quantity, unit_price=new_product.unit_price, date_added=new_product.date_added)
         return True
 
     def check_if_a_product_exist(self, prod_name):
@@ -21,10 +21,10 @@ class ProductController:
             return product_exists
         return False
 
-    def update_product(self, prod_name, prod_quantity, unit_price, prod_id):
+    def update_product(self, prod_name, prod_quantity, unit_price, prod_id, date_added):
         #function to update a product
         update = self.dbfunctions.update_product(
-            prod_name=prod_name, prod_quantity=prod_quantity, unit_price=unit_price, prod_id=prod_id)
+            prod_name=prod_name, prod_quantity=prod_quantity, unit_price=unit_price, prod_id=prod_id, date_added=date_added)
         if update:
             return True
         else:
@@ -43,3 +43,9 @@ class ProductController:
         if delete_item:
             return True
         return False
+
+    def get_all_products(self):
+        #function to fetch all the products
+        product_list = self.dbfunctions.fetch_all_products()
+        return product_list
+

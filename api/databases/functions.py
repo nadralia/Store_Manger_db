@@ -48,11 +48,11 @@ class DatabaseFunctions:
     
     """product helper functions begin it"""
 
-    def insert_a_product(self, prod_name, prod_quantity, unit_price):
+    def insert_a_product(self, prod_name, prod_quantity, unit_price, date_added):
         #function to insert a product
         query = (
-            """INSERT INTO products (prod_name, prod_quantity, unit_price) VALUES ('{}', '{}', '{}')""".
-            format(prod_name, prod_quantity, unit_price))
+            """INSERT INTO products (prod_name, prod_quantity, unit_price, date_added) VALUES ('{}', '{}', '{}','{}')""".
+            format(prod_name, prod_quantity, unit_price, date_added))
         self.cursor.execute(query)
 
     def check_if_product_exist_in_db(self,prod_name):
@@ -64,11 +64,11 @@ class DatabaseFunctions:
             return product
         return False
 
-    def update_product(self, prod_name, prod_quantity, unit_price, prod_id):
+    def update_product(self, prod_name, prod_quantity, unit_price, prod_id, date_added):
         #function to update product
         try:
-            query = ("""UPDATE products SET prod_name = '{}', prod_quantity = '{}', unit_price = '{}' where prod_id = '{}'""" .format(
-                prod_name, prod_quantity, unit_price, prod_id))
+            query = ("""UPDATE products SET prod_name = '{}', prod_quantity = '{}', unit_price = '{}', date_added = '{}' where prod_id = '{}'""" .format(
+                prod_name, prod_quantity, unit_price, prod_id, date_added))
             self.cursor.execute(query)
             count = self.cursor.rowcount
             if int(count) > 0:
@@ -93,3 +93,12 @@ class DatabaseFunctions:
             return True
         else:
             return False   
+
+    def fetch_all_products(self):
+        """
+        Query gets all that are recently available
+        :admin
+        """
+        self.cursor.execute("SELECT * FROM products")
+        all_products = self.cursor.fetchall()
+        return all_products
