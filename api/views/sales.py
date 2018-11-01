@@ -39,7 +39,7 @@ def create_sale_record(prod_id):
 def fetch_sale_orders():
     """This endpoint fetches all sale records"""
     user = get_jwt_identity()
-    role = user_controller.get_user_role(username=user)
+    role = user_controller.get_user_role(role=user)
     if role["role"] == 'admin':
         sales = sale_controller.fetch_all_sales()
     elif role["role"] == 'attendant':
@@ -55,7 +55,7 @@ def get_single_record(sale_id):
         return jsonify({"message": invalid}), 400
     user = get_jwt_identity()
     
-    role = user_controller.get_user_role(username=user)
+    role = user_controller.get_user_role(role=user)
     if role["role"] == 'admin':    
         sale = sale_controller.fetch_single_sale(sale_id=sale_id)
     elif role["role"] == 'attendant':
@@ -63,3 +63,5 @@ def get_single_record(sale_id):
     if sale:
         return jsonify({"Sale details": sale}), 200
     return jsonify({"message": "sale record not added yet"}), 404
+
+    
