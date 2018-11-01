@@ -9,9 +9,8 @@ class DatabaseFunctions:
     def create_a_new_user(self, username, phone, role, password):
         #function to create a new user
         query = (
-            """INSERT INTO users (username, phone, role, password) VALUES ('{}', '{}', '{}', '{}')""".format(username, phone, role, password))
+            """INSERT INTO users (username, contact, role, password) VALUES ('{}', '{}', '{}', '{}')""".format(username, phone, role, password))
         self.cursor.execute(query)
-        return True
 
     def check_if_username_exist(self,username):
         #function to check if username exists.
@@ -104,28 +103,39 @@ class DatabaseFunctions:
         all_products = self.cursor.fetchall()
         return all_products
 
-
-    def fetch_all_users(self):
-        """
-        Query gets all that are recently available
-        :admin
-        """
-        self.cursor.execute("SELECT * FROM users")
-        all_users = self.cursor.fetchall()
-        return all_users
-    
-    def get_item_by_value(self, table_name, table_colum, value):
-        """
-        Function  gets items from the
-        same table with similar ids :admin
-        """
-        query = "SELECT * FROM {} WHERE {} = '{}';".format(
-            table_name, table_colum, value)
+    def create_sale(self, prod_id, prod_name, prod_quantity, total_amount, attendant, date_created):
+        #function to create a sale 
+        query = (
+            """INSERT INTO sales (prod_id,prod_name, prod_quantity, total_amount, attendant, date_created) VALUES ('{}','{}', '{}', '{}', '{}', '{}')"""
+            .format(prod_id, prod_name, prod_quantity, total_amount, attendant, date_created))
         self.cursor.execute(query)
-        results = self.cursor.fetchone()
-        return results
+
+    def fetch_single_sale(self, sale_id):
+        #function to get the most recent sale record made
+        self.cursor.execute("SELECT * FROM sales WHERE sale_id = '{}'" .format(sale_id))
+        sale = self.cursor.fetchall()
+        return sale
+
+    def fetch_all_sales(self):
+        #function to fetch all sales
+        self.cursor.execute("SELECT * from sales")
+        sales = self.cursor.fetchall()
+        return sales
+
+    def get_a_sale_by_user(self, sale_id, username):
+        #function to get the most recent sale record made
+        self.cursor.execute("SELECT * FROM sales WHERE sale_id = '{}' AND attendant = '{}'" .format(sale_id, username))
+        sale = self.cursor.fetchall()
+        return sale   
+
+    def get_all_sales_by_user(self, username):
+        #function to get all available sales
+        self.cursor.execute("SELECT * FROM sales WHERE attendant = '{}'" .format(username))
+        sales = self.cursor.fetchall()
+        return sales
 
     def latest_sale(self):
+        #function to get the most recent sale record made
         self.cursor.execute("SELECT * FROM sales ORDER BY sale_id DESC LIMIT 1")
         sale = self.cursor.fetchall()
-        return sale 
+        return sale
