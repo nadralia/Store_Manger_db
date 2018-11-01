@@ -4,12 +4,15 @@ from api.models.product import Product
 from api.validation import Validate
 from datetime import datetime
 
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
 product = Blueprint('product', __name__)
 
 validate = Validate()
 product_controller = ProductController()
 
 @product.route('/api/v1/products', methods=['POST'])
+@jwt_required
 def add_product():
     """Creates a new product"""
     data = request.get_json()
@@ -64,6 +67,7 @@ def fetch_single_product(prod_id):
 
 
 @product.route('/api/v1/products/<int:prod_id>', methods=['DELETE'])
+@jwt_required
 def delete_product(prod_id):
     invalid = validate.validate_int_input_type(prod_id)
     if invalid:
@@ -75,6 +79,7 @@ def delete_product(prod_id):
         return jsonify({"message": "Product not deleted"}), 400
 
 @product.route('/api/v1/products/<int:prod_id>', methods=['PUT'])
+@jwt_required
 def update_product(prod_id):
     invalid_id = validate.validate_int_input_type(prod_id)
     if invalid_id:
