@@ -1,6 +1,8 @@
 language: python
 python:
   - "3.6.5"
+services:
+  - postgresql
 env:
   global:
     - APP_SETTINGS = tesing
@@ -10,6 +12,9 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install coverage
+
+before_script:
+  - psql -c "CREATE DATABASE store_db;" -U postgres
 # command to run tests
 script:
   - nosetests --with-cov --cov  tests/
