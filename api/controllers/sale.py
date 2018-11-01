@@ -6,7 +6,7 @@ from datetime import datetime
 class SaleController:
     def __init__(self):
         self.dbfunctions = DatabaseFunctions()
-
+        
     #function to add a new sale
     def create_a_sale(self, prod_id, prod_quantity, attendant, date_added):
         product = self.dbfunctions.fetch_a_single_product(prod_id=prod_id)

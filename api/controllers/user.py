@@ -34,7 +34,7 @@ class UserController:
             return login
         return False
 
-    def get_user_role(self, role):
-        # get current user's role
-        role = self.dbfun.get_role_of_user(role=role)
+    def get_user_role(self, username):
+        # get current user's role(Remember to change this function)
+        role = self.dbfun.check_if_username_exist(username=username)
         return role    

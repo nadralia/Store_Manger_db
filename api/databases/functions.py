@@ -102,3 +102,40 @@ class DatabaseFunctions:
         self.cursor.execute("SELECT * FROM products")
         all_products = self.cursor.fetchall()
         return all_products
+
+    def create_sale(self, prod_name, prod_quantity, total_amount, attendant, date_created):
+        #function to create a sale 
+        query = (
+            """INSERT INTO sales (prod_name, prod_quantity, total_amount, attendant, date_created) VALUES ('{}', '{}', '{}', '{}', '{}')"""
+            .format(prod_name, prod_quantity, total_amount, attendant, date_created))
+        self.cursor.execute(query)
+
+    def fetch_single_sale(self, sale_id):
+        #function to get the most recent sale record made
+        self.cursor.execute("SELECT * FROM sales WHERE sale_id = '{}'" .format(sale_id))
+        sale = self.cursor.fetchall()
+        return sale
+
+    def fetch_all_sales(self):
+        #function to fetch all sales
+        self.cursor.execute("SELECT * from sales")
+        sales = self.cursor.fetchall()
+        return sales
+
+    def get_a_sale_by_user(self, sale_id, username):
+        #function to get the most recent sale record made
+        self.cursor.execute("SELECT * FROM sales WHERE sale_id = '{}' AND attendant = '{}'" .format(sale_id, username))
+        sale = self.cursor.fetchall()
+        return sale   
+
+    def get_all_sales_by_user(self, username):
+        #function to get all available sales
+        self.cursor.execute("SELECT * FROM sales WHERE attendant = '{}'" .format(username))
+        sales = self.cursor.fetchall()
+        return sales
+
+    def latest_sale(self):
+        #function to get the most recent sale record made
+        self.cursor.execute("SELECT * FROM sales ORDER BY sale_id DESC LIMIT 1")
+        sale = self.cursor.fetchall()
+        return sale
