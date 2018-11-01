@@ -3,9 +3,17 @@ python:
   - "3.6.5"
 env:
   global:
-    - ENVIRONMENT = development
+    - APP_SETTINGS = tesing
+    - CODECOV_TOKEN="92ebdbf5-adeb-4fe0-b197-ef8315d43b9b"
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install coverage
 # command to run tests
 script:
+  - nosetests --with-cov --cov  tests/
+
+after_success:
+  - coveralls
+  - codecov
