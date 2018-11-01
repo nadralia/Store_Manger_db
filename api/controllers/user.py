@@ -6,18 +6,11 @@ class UserController:
     def __init__(self):
         self.dbfun = DatabaseFunctions()
 
-    def add_attendant(self, username, phone, role, password):
-        # create new attendant
-        user = User(username, phone, role, password)
-        self.dbfun.create_a_new_user(
-            username=user.username, phone=user.phone, role=user.role, password=user.password)
-        return True
-    
     def check_if_user_exists(self, username):
         # check if username exists.
         user_exists = self.dbfun.check_if_username_exist(username=username)
         if user_exists:
-            return True
+            return user_exists
         return False
 
     def check_if_phone_exists(self, phone):
@@ -37,4 +30,9 @@ class UserController:
     def get_user_role(self, role):
         # get current user's role
         role = self.dbfun.get_role_of_user(role=role)
-        return role    
+        return role  
+
+    def get_all_users(self):
+        #function to fetch all the products
+        user_list = self.dbfun.fetch_all_users()
+        return user_list  

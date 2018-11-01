@@ -9,8 +9,9 @@ class DatabaseFunctions:
     def create_a_new_user(self, username, phone, role, password):
         #function to create a new user
         query = (
-            """INSERT INTO users (username, contact, role, password) VALUES ('{}', '{}', '{}', '{}')""".format(username, phone, role, password))
+            """INSERT INTO users (username, phone, role, password) VALUES ('{}', '{}', '{}', '{}')""".format(username, phone, role, password))
         self.cursor.execute(query)
+        return True
 
     def check_if_username_exist(self,username):
         #function to check if username exists.
@@ -102,3 +103,29 @@ class DatabaseFunctions:
         self.cursor.execute("SELECT * FROM products")
         all_products = self.cursor.fetchall()
         return all_products
+
+
+    def fetch_all_users(self):
+        """
+        Query gets all that are recently available
+        :admin
+        """
+        self.cursor.execute("SELECT * FROM users")
+        all_users = self.cursor.fetchall()
+        return all_users
+    
+    def get_item_by_value(self, table_name, table_colum, value):
+        """
+        Function  gets items from the
+        same table with similar ids :admin
+        """
+        query = "SELECT * FROM {} WHERE {} = '{}';".format(
+            table_name, table_colum, value)
+        self.cursor.execute(query)
+        results = self.cursor.fetchone()
+        return results
+
+    def latest_sale(self):
+        self.cursor.execute("SELECT * FROM sales ORDER BY sale_id DESC LIMIT 1")
+        sale = self.cursor.fetchall()
+        return sale 

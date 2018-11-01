@@ -19,7 +19,7 @@ class Database():
                 username VARCHAR(50) NOT NULL,
                 phone VARCHAR(50) NOT NULL,
                 role VARCHAR(10) NOT NULL,
-                password VARCHAR(25) NOT NULL
+                password VARCHAR(150) NOT NULL
             )
             """,
 
