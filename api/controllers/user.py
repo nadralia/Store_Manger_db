@@ -5,6 +5,13 @@ from api.models.user import User
 class UserController:
     def __init__(self):
         self.dbfun = DatabaseFunctions()
+    
+    def add_new_user(self, username, phone, role, password):
+        # add new user
+        user = User(username, phone, role, password)
+        self.dbfun.create_a_new_user(
+            username=user.username, phone=user.phone, role=user.role, password=user.password)
+        return True
 
     def check_if_user_exists(self, username):
         # check if username exists.
@@ -20,7 +27,7 @@ class UserController:
             return True
         return False
 
-    def user_login(self, username, password):
+    def login(self, username, password):
         # user login
         login = self.dbfun.login_a_user(username=username, password=password)
         if login:

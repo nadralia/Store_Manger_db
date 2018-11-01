@@ -1,4 +1,9 @@
 [![Build Status](https://travis-ci.org/nadralia/Store_Manger_db.svg?branch=develop)](https://travis-ci.org/nadralia/Store_Manger_db)
+[![Coverage Status](https://coveralls.io/repos/github/nadralia/Store_Manger_db/badge.svg?branch=develop)](https://coveralls.io/github/nadralia/Store_Manger_db?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2b070754c151d29cfc6a/maintainability)](https://codeclimate.com/github/nadralia/Store_Manger_db/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2b070754c151d29cfc6a/test_coverage)](https://codeclimate.com/github/nadralia/Store_Manger_db/test_coverage)
+
 # Store_Manger_db
 Store Manager is a web application that helps store owners manage sales and product inventory records. This application is meant for use in a single store.
 
