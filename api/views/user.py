@@ -66,8 +66,8 @@ def login():
             user_token["token"] = access_token
             return jsonify(user_token), 200
 
-        return jsonify({"message": password}), 400
-    return jsonify({"message": "a 'key(s)' is missing in login body"}), 400
+        return jsonify({"message": "wrong login credentials or user does not exist"}), 400
+    return jsonify({"message": "make sure you use the correct keys "}), 400
 
     
 @auth.route('/api/v1/users', methods=['GET'])
