@@ -32,22 +32,17 @@ class Database():
                 date_added timestamp NOT NULL	
 			)
 			""",
-            """
-            CREATE TABLE IF NOT EXISTS categories(
-                category_id SERIAL PRIMARY KEY,
-                category_name VARCHAR(56) UNIQUE NOT NULL,
-                created_at timestamp DEFAULT NOW()
-            )
-            """,
 
             """
             CREATE TABLE IF NOT EXISTS sales (
-                 sale_id SERIAL PRIMARY KEY,
+                 sale_id SERIAL,
+                 prod_id INTEGER REFERENCES products(prod_id),
                  prod_name VARCHAR(50) NOT NULL,
                  prod_quantity INTEGER NOT NULL,
                  total_amount INTEGER NOT NULL,
                  attendant VARCHAR(50) NOT NULL,
-                 date_created timestamp NOT NULL
+                 date_created timestamp NOT NULL,
+                 PRIMARY KEY (sale_id,prod_id)
              )
              """
         )

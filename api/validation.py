@@ -30,28 +30,29 @@ class Validate:
         if unit_price == " ":
             return "unit_price is missing" 
     # add user validation
-    def user_validation(self, data):
+    def user_validation(self, username,role, password):
         # Validates user fields
-        try:
-            if len(data.keys()) == 0:
-                return "No user added", 400
-            if data['username'] == "":
-                return "User name cannot be blank", 400
-            if data['password'] == "":
-                return "Password cannot be blank", 400
-            if not re.match(r"([a-zA-Z0-9])", data['username']):
-                return "Only alphanumerics allowed in user name", 400
-            if re.match(r"([0-9])", data['username']):
-                return "user name cannot contain numbers only", 400
-            if len(data['password']) < 5:
-                return "Password too short", 400
-            else:
-                return "is_valid"
-        except KeyError:
-            return "Invalid"
+        if not username:
+            return "usename is missing"
+        if username == " ":
+            return "username is missing"
+        if not re.match(r"^([a-zA-Z\d]+[-_])*[a-zA-Z\d*]+$", username):
+            return "username must have no white spaces"
+        if (role != "admin" and role != "attendant"):
+            return "role should either be admin or attendant"    
+        if len(username) < 4:
+            return "username should be more than 4 characters long"
+        if not password:
+            return "password is missing"
 
     def validate_int_input_type(self, input):
         try:
             _input = int(input)
         except ValueError:
             return "Try inputting an interger"
+    
+    def login_validation(self, username, password):
+        if not username:
+            return "username is missing"
+        if not password:
+            return "password is missing" 

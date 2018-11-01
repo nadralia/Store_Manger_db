@@ -6,7 +6,7 @@ from datetime import datetime
 class SaleController:
     def __init__(self):
         self.dbfunctions = DatabaseFunctions()
-
+        
     #function to add a new sale
     def create_a_sale(self, prod_id, prod_quantity, attendant, date_added):
         product = self.dbfunctions.fetch_a_single_product(prod_id=prod_id)
@@ -17,9 +17,9 @@ class SaleController:
                 total_amount = (product["unit_price"]*int(prod_quantity))
                 user = attendant
                 date_added = datetime.now()
-                sale = Sale(prod_name=prod_name, prod_quantity=qty,
+                sale = Sale(prod_id=prod_id, prod_name=prod_name, prod_quantity=qty,
                                 total_amount=total_amount, attendant=user, date_added=date_added)
-                self.dbfunctions.create_sale(prod_name=sale.prod_name, prod_quantity=sale.prod_quantity,
+                self.dbfunctions.create_sale(prod_id=sale.prod_id,prod_name=sale.prod_name, prod_quantity=sale.prod_quantity,
                         total_amount=sale.unit_price, attendant=sale.attendant, date_created=sale.date_added)
 
                 new_qty = int(product["prod_quantity"])- qty
