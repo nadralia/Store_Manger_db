@@ -2,43 +2,42 @@
 [![Coverage Status](https://coveralls.io/repos/github/nadralia/Store_Manger_db/badge.svg?branch=develop)](https://coveralls.io/github/nadralia/Store_Manger_db?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2b070754c151d29cfc6a/maintainability)](https://codeclimate.com/github/nadralia/Store_Manger_db/maintainability)
 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/2b070754c151d29cfc6a/test_coverage)](https://codeclimate.com/github/nadralia/Store_Manger_db/test_coverage)
 
 # Store_Manger_db
 Store Manager is a web application that helps store owners manage sales and product inventory records. This application is meant for use in a single store.
 
 ## Getting Started
 - To start get started;
-## Features 
-- Admin can add a product
-- Admin or store attendant can get all products
-- Admin or store attendant can get a specific product.
-- Store attendant can add a sale order.
-- Admin can get all sale order details.
 
+## Features
+- Login
+- Create an attendant's account
+- Fetch all products
+- Fetch a single product record
+- Fetch all sale records
+- Fetch a single sale record
+- Create a product
+- Create a sale order
+- Update a prooduct item
+- Delete a product item
 
-## Project Links
+#### Endpoints to create an attendants account and login into the application
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/auth/signup | False | Create an attendant's account
+POST | /api/v1/auth/login | True | Login a user
 
-``` Use this link to access the api endpoints https://github.com/nadralia/Store_Manger_db ```
-
-## API Endpoints
-
-| End Point	                        | Description
-|-------------------------------:   |-----------------------------------: | 
-| POST /api/v1/auth/signup	        | User creates an account |
-| POST /api/v1/auth/login	        | User with an account can sign in with the correct credentials |
-| POST /api/v1/products             | Add a product |
-| GET /api/v1/products              | Get history of all products |
-| GET /api/v1/sales                 | Admin gets all sales |
-| GET /api/v1/sales/int:sale_id 	| Admin fetchs a single sale |
-| PUT /api/v1/sales/int:sales_id	| Admin Updates the status of an sales |
-
-
-**Technologies used to build the application**
-
-* [Python 3.7](https://docs.python.org/3/)
-
-* [Flask](http://flask.pocoo.org/)
+#### Endpoints to create, views available products and create sale records
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/products | False | Create a product
+POST | /api/v1/sales | False | Create a sale order
+GET | /api/v1/products | False | Fetch all available products
+GET | /api/v1/products/<product_id> | False | Fetch details of a single product
+DELETE | /api/v1/products/<product_id> | False | Delete a single product
+PUT | /api/v1/products/<product_id> | False | Edit details of a single product
+GET | /api/v1/sales/<sale_id> | False | Fetch details of a single sale record
+GET | /api/v1/sales | False | Fetch all sale records created
 
 
 ## Installation
@@ -67,8 +66,6 @@ $ python run.py
 Test your setup using [postman](www.getpostman.com) REST-client
 
 
-### Link to Store Manager on Heroku
-
 # Running the tests
 
 - To run the test run ```nosetests --with-cov --cov  tests/``` in a command line interface
@@ -82,3 +79,5 @@ Test your setup using [postman](www.getpostman.com) REST-client
 # Authors
 
 - Adralia Nelson
+
+### Link to Store Manager on Heroku
