@@ -31,7 +31,7 @@ class BaseTestCase(unittest.TestCase):
     
     def admin_login(self):
         response = self.app.post(
-            "/api/auth/login",
+            "/api/v1/auth/login",
             content_type='application/json',
             data=json.dumps(dict(username=self.username, password=self.password))
         )
@@ -40,7 +40,7 @@ class BaseTestCase(unittest.TestCase):
     
     def attendant_login(self):
         response = self.app.post(
-            "/api/auth/login",
+            "/api/v1/auth/login",
             content_type='application/json',
             data=json.dumps(dict(username="nadralia", password="nadra2922"))
         )
