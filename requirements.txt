@@ -41,7 +41,7 @@ PyJWT==1.6.4
 pylint==2.1.1
 pytest==3.9.1
 pytz==2018.5
-PyYAML==3.13
+PyYAML==5.4
 requests==2.20.0
 singledispatch==3.4.0.3
 six==1.11.0
